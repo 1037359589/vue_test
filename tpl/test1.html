@@ -19,17 +19,62 @@
           </li>
         </ul>
         <input type="text" v-model='newmsg' class="form-control" id="exampleInputEmail1" v-on:keyup.enter="addTodo">
-        <button type="button" name="button" v-on:click="changeData" class='btn'>changeData</button>
+        <button type="button" name="button" @click="changeData" class='btn'>changeData</button>
       </div>
     </div>
 
     <div id="example-2">
       <p v-if="greeting">Hello!</p>
     </div>
+    <div id="example-3">
+        <div class="">
+          a={{a}} , b={{b}}
+        </div>
+        <div class="static" :class="{'classA':isA,'classB':isB}">
+        <div :class="classObj">
+        </div>
+        <div :class="classArr">
+        </div>
+        <div v-bind:class="[classA, classB]">
+        </div>
+        <div :style='styleObj'>
+
+        </div>
+        <div :style='[styleObj,styleObj2]'>
+
+        </div>
+        <template v-if="ok">
+            <div class="">
+              显示判断正确
+            </div>
+            <span>呵呵哒</span>
+        </template>
+        <template v-else>
+            <span>显示错误判断</span>
+        </template>
+        <button type="button" name="button" v-on:click="changeOK">改变判断</button>
+        <ul id="repeat-object" class="demo">
+          <li v-for="value in object">
+            {{ $key }} : {{ value }}
+          </li>
+        </ul>
+        <form class="" action="" method="post">
+            <button v-on:click="say('hello!',$event)">Submit</button>
+        </form>
+        <input
+          type="checkbox"
+          v-model="toggle" value='a'
+        >checkbox1
+        <input
+          type="checkbox"
+          v-model="toggle" value='b'
+      >checkbox2
+      </div>
     <script type="text/javascript" src='../vue.js'></script>
     <script type="text/javascript">
       Vue.config.debug = true
-      new Vue({
+      Vue.config.devtools = true
+      var vm=new Vue({
         el:'#app',
         data:{
           message:"Hello World",
@@ -56,12 +101,79 @@
           }
         }
       });
+      console.log(vm);
       var exampleVM2 = new Vue({
-      el: '#example-2',
-      data: {
-        greeting: true
-      }
-    })
+        el: '#example-2',
+        data: {
+          greeting: true
+          }
+      });
+      var vm3=new Vue({
+        el:"#example-3",
+        data:{
+          a:1,
+          b:2,
+          c:3,
+          d:4,
+          e:5,
+          f:6,
+          ok:true,
+          isA:true,
+          isB:true,
+          toggle:[],
+          classObj:{
+            classA:true,
+            classB:true
+          },
+          classArr:['class-A','class-B'],
+          classA: 'class-a',
+          classB: 'class-b',
+          styleObj:{
+            color:'red',
+            background:"#000"
+          },
+          styleObj2:{
+            fontSize:"13px",
+            background:"#fff",
+            transform:'rotate(30deg)'
+          },
+          object: {
+            FirstName: 'John',
+            LastName: 'Doe',
+            Age: 30
+          }
+        },
+        methods:{
+          changeOK:function(){
+            if(!!this.ok){
+                this.ok=false;
+            }else{
+              this.ok=true;
+            }
+          },
+          say: function (msg, event) {
+             // 现在我们可以访问原生事件对象
+             event.preventDefault()
+           }
+        }
+
+        // computed:{
+        //   b:function(){
+        //     return this.a+1
+        //   }
+        // }
+      });
+
+      // vm3.$watch('a',function(val){
+      //   this.b=val+"dasdasda";
+      // });
+      vm3.$watch('toggle',function(val){
+        console.log(val);
+        if(val.indexOf('a')>=0){
+          alert(1);
+        }
+      });
+      vm3.a=3;
     </script>
   </body>
 </html>
