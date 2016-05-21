@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="app">
+        <div class="form-group">
+         <label for="exampleInputEmail1">{{message}}</label>
+          <input type="text" v-model='message' class="form-control" id="exampleInputEmail1" >
+        </div>
+        <ul>
+          <li v-for='o in list'>
+            {{o.text}}
+            <button type="button" name="button" v-on:click=removeLi($index)>x</button>
+          </li>
+        </ul>
+        <input type="text" v-model='newmsg' class="form-control" id="exampleInputEmail1" v-on:keyup.enter="addTodo">
+        <button type="button" name="button" v-on:click="changeData" class='btn'>changeData</button>
+      </div>
+    </div>
+
+    <div id="example-2">
+      <p v-if="greeting">Hello!</p>
+    </div>
+    <script type="text/javascript" src='../vue.js'></script>
+    <script type="text/javascript">
+      Vue.config.debug = true
+      new Vue({
+        el:'#app',
+        data:{
+          message:"Hello World",
+          index:3,
+          newmsg:"",
+          list:[
+            {text:"这是第一条！！"},
+            {text:"这是第二条！！"},
+            {text:"这是第三条！！"}
+          ]
+        },
+        methods:{
+          addTodo:function(){
+            if(this.newmsg){
+              this.index++;
+              this.list.push({text:this.newmsg});
+            }
+          },
+          changeData:function(){
+              this.message="Hello Vue.js!!";
+          },
+          removeLi:function(index){
+              this.list.splice(index,1);
+          }
+        }
+      });
+      var exampleVM2 = new Vue({
+      el: '#example-2',
+      data: {
+        greeting: true
+      }
+    })
+    </script>
+  </body>
+</html>
